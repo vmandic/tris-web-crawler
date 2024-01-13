@@ -3,16 +3,20 @@
   "version": "1.0.0",
   "author": "mandic.vedran@gmail.com",
   "description": "Simple NodeJS web scraper to extract links from a target domain - Thris (SSS).",
-  "main": "web-scraper.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node scraper.js"
+    "start": "node --experimental-modules index.js"
   },
+  "type": "module",
   "keywords": [],
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.4",
     "cheerio": "^1.0.0-rc.10",
     "dotenv": "^10.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0"
   },
   "engines": {
     "node": ">=14.17.0"
