@@ -14,7 +14,7 @@
       ],
       "skipFiles": ["<node_internals>/**"],
       "outFiles": ["${workspaceFolder}/**/*.js"],
-      "envFile": "${workspaceFolder}/.env.local"
+      "envFile": "${workspaceFolder}/.env"
     }
   ]
 }
