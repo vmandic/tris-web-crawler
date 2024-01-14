@@ -2,6 +2,22 @@
 
 Simple Spider Scraper or _Tris_ is a Node.js CLI tool which is by its core feature a web scraper (link spider) that allows you to recursively crawl a website and collect links within the specified depth. It provides various customization options to tailor the scraping process according to your needs.
 
+Whether you're a developer, SEO professional, or data enthusiast, Tris provides a simple yet powerful tool to gather valuable insights from websites.
+
+## Who Can Benefit?
+
+### Developers
+
+Tris is ideal for developers who need a quick and reliable way to extract links from a website, whether for indexing purposes, link analysis, or content mapping.
+
+### SEO Professionals
+
+SEO professionals can leverage Tris to gather valuable data about a website's structure, internal linking, and potential SEO opportunities.
+
+### Data Enthusiasts
+
+Data enthusiasts seeking to explore and analyze the structure of websites can use Tris to collect link data and gain insights into a website's content hierarchy.
+
 ## Features
 
 - **Customizable Settings**: Configure the scraper with various settings using environment variables.
@@ -66,3 +82,9 @@ This project is licensed under the [ISC License](LICENSE) - see the [LICENSE](LI
 Vedran Mandić
 
 Feel free to modify or extend it further based on your preferences!
+
+## Why Tris?
+
+Tris stands out as a simple yet effective solution for web scraping, providing a balance between customization and ease of use. As said in the begging of this document, whether you're a developer, SEO professional, or data enthusiast, Tris empowers you to gather valuable insights from websites with minimal setup and maximum flexibility.
+
+Start exploring the web with Tris today!
