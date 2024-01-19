@@ -1,0 +1,64 @@
+<!-- src/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Vedran Mandić">
+    <meta
+      name="description"
+      content="Tris - Simple Spider Scraper. A Node.js web scraper to recursively crawl a website and collect links within a specified depth, built by Vedran Mandić."
+    />
+    <!-- Open Graph meta tags for social media sharing -->
+    <meta property="og:title" content="Tris - Simple Spider Scraper" />
+    <meta
+      property="og:description"
+      content="A Node.js web scraper to recursively crawl a website and collect links within a specified depth."
+    />
+    <meta property="og:type" content="website" />
+    <!-- Twitter Card meta tags for Twitter sharing -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Tris - Simple Spider Scraper" />
+    <meta
+      name="twitter:description"
+      content="A Node.js web scraper to recursively crawl a website and collect links within a specified depth."
+    />
+    <!-- Include Tailwind CSS from CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+        a {
+            color: rgb(112, 71, 200);
+        }
+
+        a:hover {
+            color: rgb(64, 40, 117);
+        }
+    </style>
+    <title>Tris - Simple Spider Scraper</title>
+  </head>
+  <body>
+    <div class="container mx-auto my-8">
+      <h1 class="text-3xl font-bold mb-4">Tris - Simple Spider Scraper</h1>
+      <p class="text-lg mb-4">
+        A Node.js web scraper to recursively crawl a website and collect links
+        within a specified depth.
+      </p>
+      <h3 class="text-lg mb-4">Usage example with cURL:</h3>
+      <pre><code>curl http://localhost:8080/scrape?url=http://example.com</code></pre>
+      <br />
+      <h3 class="text-lg mb-4">Source Code:</h3>
+      <p class="text-lg mb-4">
+        The source code for Tris is available on GitHub:<br /><a
+          href="https://github.com/vmandic/tris-simple-spider-scraper"
+          target="_blank"
+          rel="noopener noreferrer"
+          >https://github.com/vmandic/tris-simple-spider-scraper</a
+        >
+      </p>
+      <!-- Additional SEO content can be added here -->
+    </div>
+  </body>
+</html>

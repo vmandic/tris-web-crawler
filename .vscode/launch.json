@@ -5,13 +5,23 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug",
+      "name": "Debug (CLI)",
       "program": "${workspaceFolder}/index.js",
       "runtimeExecutable": "yarn",
       "runtimeArgs": ["start"],
       "args": [
-        "www.google.com" // Add your website to scrape and debug
+        "https://www.google.hr" // Add your website to scrape and debug
       ],
+      "skipFiles": ["<node_internals>/**"],
+      "outFiles": ["${workspaceFolder}/**/*.js"],
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug (HTTP server)",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["serve", "8888"],
       "skipFiles": ["<node_internals>/**"],
       "outFiles": ["${workspaceFolder}/**/*.js"],
       "envFile": "${workspaceFolder}/.env"

@@ -20,15 +20,18 @@ const {
   EXCLUDE_FRAGMENT,
 } = loadEnvSettings();
 
-
-
-function filterLinksFromCurrentPage(links, resolvedUrl, baseUrl, attemptedLinks) {
+function filterLinksFromCurrentPage(
+  links,
+  resolvedUrl,
+  baseUrl,
+  attemptedLinks
+) {
   const parsedBaseUrl = url.parse(baseUrl);
   const parsedDomain = `${parsedBaseUrl.protocol}//${parsedBaseUrl.hostname}`;
 
   links = links.map((link) => {
     // Convert domain root relative link to absolute link
-    if (link[0] === '/') {
+    if (link[0] === "/") {
       link = `${parsedDomain}${link}`;
     }
 
@@ -58,19 +61,25 @@ function filterLinksFromCurrentPage(links, resolvedUrl, baseUrl, attemptedLinks)
 }
 
 function extractLinksFromAnchorElements($doc) {
-  return Array.from(new Set($doc("a[href]")
-    .map((_, element) => $doc(element).attr("href"))
-    .get()));
+  return Array.from(
+    new Set(
+      $doc("a[href]")
+        .map((_, element) => $doc(element).attr("href"))
+        .get()
+    )
+  );
 }
 
-let totalRequests = 0;
-let limited = false;
-async function scrapeRecursive(
-  baseUrl,
-  relativeUrl,
-  currentDepth,
-  attemptedLinks
-) {
+async function scrapeRecursive(opts) {
+  let {
+    baseUrl,
+    relativeUrl,
+    currentDepth,
+    attemptedLinks,
+    logCallbackFn,
+    counter,
+  } = opts;
+
   currentDepth = currentDepth || 0;
   attemptedLinks = attemptedLinks || new Map();
 
@@ -79,10 +88,10 @@ async function scrapeRecursive(
 
   try {
     // Check if the total number of requests exceeds the limit
-    if (WEB_REQUESTS_LIMIT && totalRequests >= WEB_REQUESTS_LIMIT) {
-      if (!limited) {
-        console.log(`Requests limit (${WEB_REQUESTS_LIMIT}) reached.`);
-        limited = true;
+    if (WEB_REQUESTS_LIMIT && counter.totalRequests >= WEB_REQUESTS_LIMIT) {
+      if (!counter.limited) {
+        logCallbackFn(`Requests limit (${WEB_REQUESTS_LIMIT}) reached.`);
+        counter.limited = true;
       }
       return;
     }
@@ -102,7 +111,7 @@ async function scrapeRecursive(
     const randomUserAgent =
       USER_AGENTS[Math.floor(Math.random() * USER_AGENTS.length)];
 
-    totalRequests++;
+    counter.totalRequests++;
     const response = await axios.get(resolvedUrl, {
       headers: { "User-Agent": randomUserAgent },
       timeout: TIMEOUT_MS,
@@ -114,10 +123,17 @@ async function scrapeRecursive(
     const $doc = cheerio.load(html);
 
     let pageLinks = extractLinksFromAnchorElements($doc);
-    pageLinks = filterLinksFromCurrentPage(pageLinks, resolvedUrl, baseUrl, attemptedLinks);
+    pageLinks = filterLinksFromCurrentPage(
+      pageLinks,
+      resolvedUrl,
+      baseUrl,
+      attemptedLinks
+    );
 
-    console.log(
-      `Request ${totalRequests}, visited: ${resolvedUrl}, new domain links found: ${pageLinks.length}${
+    logCallbackFn(
+      `Request ${
+        counter.totalRequests
+      }, visited: ${resolvedUrl}, new domain links found: ${pageLinks.length}${
         OUTPUT_HTTP_CODE ? ` | ${statusCode}` : ""
       }`
     );
@@ -127,7 +143,14 @@ async function scrapeRecursive(
     for (const link of pageLinks) {
       if (!attemptedLinks.has(link)) {
         const nextDepth = currentDepth + 1;
-        await scrapeRecursive(resolvedUrl, link, nextDepth, attemptedLinks);
+        await scrapeRecursive({
+          baseUrl: resolvedUrl,
+          relativeUrl: link,
+          currentDepth: nextDepth,
+          attemptedLinks,
+          logCallbackFn,
+          counter,
+        });
       }
     }
 
@@ -136,14 +159,16 @@ async function scrapeRecursive(
   } catch (error) {
     if (axios.isAxiosError(error)) {
       // Axios-specific error (network issue, timeout, etc.)
-      console.error(`Axios HTTP error for ${resolvedUrl || relativeUrl}: ${error.message}`);
+      console.warn(
+        `HTTP error for ${resolvedUrl || relativeUrl}: ${error.message}`
+      );
     }
 
     attemptedLinks.set(resolvedUrl, error.response?.status);
-    console.error(
-      `Request ${totalRequests}, error: ${resolvedUrl || relativeUrl}: ${
-        error.message
-      }${error.response ? `, HTTP ${error.response.status}` : ""}`
+    logCallbackFn(
+      `Request ${counter.totalRequests}, error: ${
+        resolvedUrl || relativeUrl
+      } | ${error.response?.status || "STATUS_UNKNOWN"}`
     );
   }
 
@@ -199,24 +224,49 @@ function transformLink(link) {
   return link;
 }
 
-export async function startScraping(initialUrl) {
+export async function startScraping(opts) {
+  let { initialUrl, logCallbackFn, saveScrapeFile } = opts;
   const startTimestamp = performance.now();
-  const now = new Date();
-  const formattedDate = now.toISOString().replace(/[-T:]/g, "").slice(0, 14);
-  const outputName = `spider-output-${formattedDate}.out`;
 
   // Start the scraper with the initial URL, trim end '/' if specified
   if (initialUrl.endsWith("/")) {
     initialUrl = initialUrl.slice(0, -1);
   }
-  const attemptedLinks = (await scrapeRecursive(initialUrl)) || [];
-  // After scraping is complete, convert the Set to an array
+
+  // Make sure we pass it as reference so it can get accessed
+  // across different recursive calls
+  const counter = { totalRequests: 0, limited: false };
+
+  const attemptedLinks =
+    (await scrapeRecursive({ baseUrl: initialUrl, logCallbackFn, counter })) ||
+    [];
 
   if (attemptedLinks.length == 0) {
-    console.warn("No links were scraped. Check your scraper settings.");
+    logCallbackFn("No links were scraped. Check your scraper settings.");
     return;
   }
 
+  if (saveScrapeFile) {
+    const formattedDate = new Date()
+      .toISOString()
+      .replace(/[-T:]/g, "")
+      .slice(0, 12);
+    const outputName = `s${formattedDate}-${encodeURIComponent(
+      initialUrl
+    )}.out`;
+    await writeScrapeFile(attemptedLinks, outputName);
+  }
+
+  const endTimestamp = performance.now();
+  const executionTimeMs = endTimestamp - startTimestamp;
+  const executionTimeSec = (executionTimeMs / 1000).toFixed(2);
+  logCallbackFn(
+    `Scraping completed. Scraper execution time ${executionTimeSec}s.`
+  );
+}
+
+async function writeScrapeFile(attemptedLinks, outputName) {
+  // After scraping is complete, convert the Set to an array
   let linksArray = Array.from(attemptedLinks);
 
   // Sort the array if SORT_OUTPUT is trues
@@ -234,12 +284,5 @@ export async function startScraping(initialUrl) {
       )
       .join("\n"),
     "utf-8"
-  );
-
-  const endTimestamp = performance.now();
-  const executionTimeMs = endTimestamp - startTimestamp;
-  const executionTimeSec = (executionTimeMs / 1000).toFixed(2);
-  console.log(
-    `Scraping completed. Scraper execution time ${executionTimeSec}s.`
   );
 }

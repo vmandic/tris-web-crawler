@@ -14,6 +14,8 @@ if (!initialUrl) {
   throw new Error("Please provide a URL as the first command-line argument.");
 }
 
-startScraping(initialUrl).catch((error) =>
-  console.error(`Error: ${error.message}`)
+const log = (msg) => console.log(msg);
+
+startScraping({ initialUrl, logCallbackFn: log, saveScrapeFile: true }).catch(
+  (error) => console.error(`Error: ${error.message}`)
 );

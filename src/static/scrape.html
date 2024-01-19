@@ -1,0 +1,70 @@
+<!-- static/scrape.html -->
+<!-- ChatGPT rel: https://chat.openai.com/c/8e121ed5-5999-4269-9e96-efb5520ccfa5 -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Vedran Mandić" />
+    <meta
+      name="description"
+      content="Tris - Simple Spider Scraper. A Node.js web scraper to recursively crawl a website and collect links within a specified depth, built by Vedran Mandić."
+    />
+    <title>Tris: Results</title>
+  </head>
+  <body>
+    <h1>Scrape Results</h1>
+    <h2>Results for URL: <span id="scrapedUrl"></span></h2>
+    <pre id="results"></pre>
+
+    <script>
+      // Extract URL from the query string
+      const urlParams = new URLSearchParams(window.location.search);
+      const scrapedUrl = urlParams.get("url");
+
+      // Validate the URL format
+      const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+      if (!scrapedUrl || !urlRegex.test(scrapedUrl)) {
+        document.getElementById("results").innerText =
+          "Error: Invalid or missing URL. The URL must start with http (if not specified alike).";
+      } else {
+        // Display the extracted URL
+        document.getElementById("scrapedUrl").textContent = scrapedUrl;
+
+        // Extract port from the current window location
+        const port = Number(window.location.port) + 1;
+
+        // Establish WebSocket connection
+        const socket = new WebSocket(`ws://localhost:${port}/`);
+
+        socket.onopen = function (event) {
+          // The connection is open, send the scraped URL and kick off the scraper
+          socket.send(scrapedUrl);
+        };
+
+        // Handle errors during WebSocket connection
+        socket.onerror = function (event) {
+          document.getElementById(
+            "results"
+          ).innerText = `Error connecting to WebSocket: ${JSON.stringify(event)}`;
+        };
+
+        socket.onmessage = function (event) {
+          const result = event.data;
+          // Display the result in the 'results' pre element
+          document.getElementById("results").innerText += `${result}\n`;
+        };
+
+        // Close the WebSocket connection when scraping is complete
+        socket.onclose = function (event) {
+          if (event.code === 1006) {
+            document.getElementById("results").innerHTML +=
+              "<br>Error: WebSocket connection closed unexpectedly.";
+          } else {
+            console.log("WebSocket closed.");
+          }
+        };
+      }
+    </script>
+  </body>
+</html>
