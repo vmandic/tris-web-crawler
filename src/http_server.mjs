@@ -49,12 +49,13 @@ wss.on("connection", (ws) => {
   ws.on("close", () => console.log("Client has disconnected."));
 
   ws.on("message", async (message) => {
-    const url = message.toString('utf-8');
+    const url = message.toString("utf-8");
 
     if (!url) {
       ws.send("Error: Please provide a URL parameter.");
     } else {
       try {
+        // TODO: implement a failsafe to unhook on client disconnect
         ws.send(`Starting scraper for URL: ${url}`);
         await startScraping({
           initialUrl: url,

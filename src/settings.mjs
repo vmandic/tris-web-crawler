@@ -35,7 +35,7 @@ function getUserAgents() {
   if (randomAgentsCount && randomAgentsCount < 1) {
     return process.env.USER_AGENTS
       ? process.env.USER_AGENTS.split("\\")
-      : ["tris v1"];
+      : ["tris-simple-spider-scraper v1"];
   }
 
   let agents = [];

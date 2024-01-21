@@ -1,4 +1,3 @@
-<!-- src/index.html -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -48,14 +47,16 @@
       </p>
       <h3 class="text-lg mb-4 font-bold">How to use:</h3>
       <p>
-      Navigate to the following link to start scraping from it by using the settings stated below: 
-      <a id="port-link" href="">http://localhost:<span id="port"></span>/scrape?url=https://www.index.hr</a>
-      <br />
+        Navigate to the following link to start scraping from it by using the
+        settings stated below:
+        <a id="scrape-link" href="">
+          <span id="domain"></span>/scrape?url=https://www.index.hr
+        </a>
+        <br />
       </p>
       <br />
       <h3 class="text-lg mb-4 font-bold">Current scraper settings:</h3>
-      <pre id="settings">
-      </pre>
+      <pre class="text-xs" id="settings"></pre>
       <br />
       <h3 class="text-lg mb-4 font-bold">Source Code:</h3>
       <p class="text-lg mb-4">
@@ -71,8 +72,8 @@
     </div>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        document.querySelector("#port").innerHTML = window.location.port;
-        let aLink = document.querySelector("a#port-link");
+        document.querySelector("#domain").innerHTML = window.location.origin;
+        let aLink = document.querySelector("a#scrape-link");
         let link = aLink.innerText;
         aLink.setAttribute("href", link);
 
