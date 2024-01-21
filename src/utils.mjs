@@ -11,3 +11,14 @@ export function isSameDomain(domain1, domain2) {
   // Reverse the hostnames and check if link's reversed hostname starts with base URL's reversed hostname
   return revHost1Parts[0] == revHost2Parts[0] && revHost1Parts[1] == revHost2Parts[1];
 }
+
+export function sortObjectByPropertyNames(obj) {
+  const sortedKeys = Object.keys(obj).sort();
+  const sortedObject = {};
+
+  sortedKeys.forEach(key => {
+    sortedObject[key] = obj[key];
+  });
+
+  return sortedObject;
+};

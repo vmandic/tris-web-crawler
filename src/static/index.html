@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="author" content="Vedran Mandić">
+    <meta name="author" content="Vedran Mandić" />
     <meta
       name="description"
       content="Tris - Simple Spider Scraper. A Node.js web scraper to recursively crawl a website and collect links within a specified depth, built by Vedran Mandić."
@@ -29,13 +29,13 @@
       rel="stylesheet"
     />
     <style>
-        a {
-            color: rgb(112, 71, 200);
-        }
+      a {
+        color: rgb(112, 71, 200);
+      }
 
-        a:hover {
-            color: rgb(64, 40, 117);
-        }
+      a:hover {
+        color: rgb(64, 40, 117);
+      }
     </style>
     <title>Tris - Simple Spider Scraper</title>
   </head>
@@ -46,8 +46,16 @@
         A Node.js web scraper to recursively crawl a website and collect links
         within a specified depth.
       </p>
-      <h3 class="text-lg mb-4">Usage example with cURL:</h3>
-      <pre><code>curl http://localhost:8080/scrape?url=http://example.com</code></pre>
+      <h3 class="text-lg mb-4">Usage example:</h3>
+      <p>
+      Navigate to: 
+      <a id="port-link" href="">http://localhost:<span id="port"></span>/scrape?url=https://www.index.hr</a>
+      <br />
+      </p>
+      <br />
+      <h3 class="text-lg mb-4">Current settings:</h3>
+      <pre id="settings">
+      </pre>
       <br />
       <h3 class="text-lg mb-4">Source Code:</h3>
       <p class="text-lg mb-4">
@@ -58,7 +66,29 @@
           >https://github.com/vmandic/tris-simple-spider-scraper</a
         >
       </p>
+      <h3>Built by: Vedran Mandić</h3>
       <!-- Additional SEO content can be added here -->
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector("#port").innerHTML = window.location.port;
+        let aLink = document.querySelector("a#port-link");
+        let link = aLink.innerText;
+        aLink.setAttribute("href", link);
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "/settings", true);
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            document.querySelector("#settings").innerText = JSON.stringify(
+              JSON.parse(xhr.responseText),
+              null,
+              2
+            );
+          }
+        };
+        xhr.send();
+      });
+    </script>
   </body>
 </html>

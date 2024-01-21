@@ -4,6 +4,8 @@ import path, { dirname } from "path";
 import { startScraping } from "./scraper.mjs";
 import { fileURLToPath } from "url";
 import { WebSocketServer } from "ws";
+import { loadEnvSettings } from "./settings.mjs";
+import { sortObjectByPropertyNames } from "./utils.mjs";
 
 const app = express();
 const port = process.argv[2] || 8080;
@@ -18,6 +20,11 @@ app.use("/static", express.static(path.join(__dirname, "static")));
 // Serve scrape.html for /scrape
 app.get("/scrape", (req, res) => {
   res.sendFile(path.join(__dirname, "static", "scrape.html"));
+});
+
+app.get("/settings", (req, res) => {
+  const settings = sortObjectByPropertyNames(loadEnvSettings());
+  res.send(settings);
 });
 
 // Serve index.html for / and /index.html

@@ -98,6 +98,7 @@ cp .env.example .env
 - `TIMEOUT_MS`: Set the timeout in milliseconds (default: 10ms).
 - `PATH_DEPTH`: Set the path depth limit (default: 3).
 - `USER_AGENTS`: Provide a list of custom user-agent headers (comma-delimited).
+- `USE_RANDOM_AGENTS_COUNT`: Overrides USER_AGENTS if specified, generates N random UAs, default 0.
 - `SKIP_WORDS`: Specify skip words to skip links (comma-delimited).
 - `SORT_OUTPUT`: Set to "true" to sort output lines in ascending order.
 - `DELAY_MS`: Introduce a delay between requests (default: 0).
