@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag vmandic/tris:github_main_$(date +%s)
+      run: docker build . --file ./docker/Dockerfile --tag vmandic/tris:github_main_$(date +%s)
