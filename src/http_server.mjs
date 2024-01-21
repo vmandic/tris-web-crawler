@@ -1,3 +1,4 @@
+// starting point for HTTP server run mode
 import express from "express";
 import path, { dirname } from "path";
 import { startScraping } from "./scraper.mjs";

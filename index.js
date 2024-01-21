@@ -1,3 +1,4 @@
+// starting point for CLI run mode
 import { startScraping } from "./src/scraper.mjs";
 
 let initialUrl = process.argv[2];
