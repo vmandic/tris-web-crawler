@@ -4,6 +4,8 @@ Simple Spider Scraper or _Tris_ is a Node.js CLI tool which is by its core featu
 
 Whether you're a developer, SEO professional, or data enthusiast, Tris provides a simple yet powerful tool to gather valuable insights from websites.
 
+<img src="./assets/tris-screenshot.jpg" alt="Tris web browser screenshot of results page" />
+
 ## Who Can Benefit?
 
 ### Developers
@@ -35,6 +37,8 @@ Data enthusiasts seeking to explore and analyze the structure of websites can us
 
 ## Setup
 
+Prerequisite is NodeJS >= v14.17 (check out related [package.json](./package.json)).
+
 1. Clone the repository:
 
 ```bash
@@ -47,15 +51,44 @@ git clone https://github.com/vmandic/tris-simple-spider-scraper.git
 yarn install
 ```
 
-3. Run scraper:
+## Run
 
+Before running you can set up you .env file first by looking at the [.env.example](./.env.example) file to set up the scraper configuration options.
+
+### From CLI
+
+The results are printed back directly to the terminal standard output.
+
+```bash
+yarn start https:///www.github.com
 ```
-yarn start www.google.com
+
+### As HTTP server
+
+By default the web app will be served on :8080, you can specify your own port as first parameter.
+The following example will serve on the default 8080 port:
+
+```bash
+yarn serve
 ```
+
+The server works by opening a web socket connection on the given web server port +1 (ie. if you selected port 7777 then the socket will be on 7778). The web socket is used to transmit live scraping results back to the web page so you can see results as they come back.
+
+Start on port 7777 by explicitly specifying it:
+
+```bash
+yarn serve 7777 
+```
+
+After starting the web server navigate to:<br>`/scrape?url={specify valid URL to start scraping from here}`
+
+## Debugging
+
+You can debug the app in either CLI or web server run mode using the configuration in [`./vscode/launch.json`](./.vscode/launch.json). and vscode as your IDE and debugging tool.
 
 ## Configuration (Environment Variables)
 
-Setup the .env file by copying .env.example:
+Setup the .env file by copying [.env.example](./.env.example):
 
 ```bash
 cp .env.example .env
@@ -73,10 +106,6 @@ cp .env.example .env
 - `EXCLUDE_QUERY_STRING`: Set to "true" to exclude query strings from URLs (default: false).
 - `EXCLUDE_FRAGMENT`: Set to "true" to exclude fragments from URLs (default: false).
 
-## License
-
-This project is licensed under the [ISC License](LICENSE) - see the [LICENSE](LICENSE) file for details.
-
 ## Author
 
 Vedran Mandić
@@ -88,3 +117,7 @@ Feel free to modify or extend it further based on your preferences!
 Tris stands out as a simple yet effective solution for web scraping, providing a balance between customization and ease of use. As said in the begging of this document, whether you're a developer, SEO professional, or data enthusiast, Tris empowers you to gather valuable insights from websites with minimal setup and maximum flexibility.
 
 Start exploring the web with Tris today!
+
+## License
+
+This project is licensed under the [ISC License](LICENSE) - see the [LICENSE](LICENSE) file for details.
