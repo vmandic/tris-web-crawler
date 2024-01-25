@@ -2,7 +2,7 @@ import axios from "axios";
 import cheerio from "cheerio";
 import url from "url";
 import fs from "fs/promises";
-import { loadEnvSettings } from "./settings.mjs";
+import { getSettings } from "./settings.mjs";
 import { isSameDomain } from "./utils.mjs";
 
 const {
@@ -18,7 +18,7 @@ const {
   TRIM_ENDING_SLASH,
   EXCLUDE_QUERY_STRING,
   EXCLUDE_FRAGMENT,
-} = loadEnvSettings();
+} = getSettings();
 
 function filterLinksFromCurrentPage(
   links,

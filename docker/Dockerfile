@@ -20,10 +20,16 @@ WORKDIR /usr/src/app
 # Copy only the necessary files from the build stage
 COPY --from=build /usr/src/app/node_modules ./node_modules
 COPY --from=build /usr/src/app/src ./src
+COPY --from=build /usr/src/app/certs ./certs
 COPY --from=build /usr/src/app/.env.example ./.env
 
-# Expose the port on which app will run
+# Expose the HTTP server port
 EXPOSE 8080
 
+# Expose the WebSocket port
+EXPOSE 8082
+
+ENV NODE_TLS_REJECT_UNAUTHORIZED=0
+
 # Run app
-CMD ["node", "--experimental-modules", "./src/http_server.mjs"]
+ENTRYPOINT ["node", "--experimental-modules", "./src/http_server.mjs", "8080"]

@@ -193,3 +193,4 @@ $RECYCLE.BIN/
 .env
 *.out
 .DS_Store
+/certs/tris-self-signed-key.pem

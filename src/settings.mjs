@@ -1,9 +1,10 @@
 import dotenv from "dotenv";
 import randomUseragent from "random-useragent";
+import fs from "fs";
 dotenv.config();
 
 let settings;
-export function loadEnvSettings() {
+export function getSettings() {
   return (
     settings ||
     (settings = {
@@ -22,9 +23,34 @@ export function loadEnvSettings() {
       TIMEOUT_MS: parseInt(process.env.TIMEOUT_MS) || 5000,
       EXCLUDE_QUERY_STRING: process.env.EXCLUDE_QUERY_STRING === "true",
       EXCLUDE_FRAGMENT: process.env.EXCLUDE_FRAGMENT === "true",
+      WSS_PRIVATE_KEY: getWssPrivateKey(),
     })
   );
 }
+
+function getWssPrivateKey() {
+  let key = process.env.WSS_PRIVATE_KEY;
+  if (!key) {
+    try {
+      console.log("Using WSS SSL key from existing file: certs/tris-self-signed-key.pem");
+      key = fs.readFileSync("certs/tris-self-signed-key.pem", "utf-8");
+    } catch (error) {
+      throw new Error(
+        `Could not load a default WSS key file: ` +
+        `certs/tris-self-signed-key.pem, details: ${JSON.stringify(error)}`
+      );
+    }
+  } else {
+    // ref: https://stackoverflow.com/a/74668003/1534753
+    key = key.split(String.raw`\n`).join('\n');
+    console.log("WSS SSL key loaded from .env, writing it to: certs/tris-self-signed-key.pem");
+    fs.writeFileSync("certs/tris-self-signed-key.pem", key);
+    console.log("WSS SSL key recorded to file")
+  }
+
+  return key;
+}
+
 function getUserRandomAgentsCount() {
   return process.env.USE_RANDOM_AGENTS_COUNT || 0;
 }

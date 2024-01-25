@@ -4,12 +4,15 @@ import path, { dirname } from "path";
 import { startScraping } from "./scraper.mjs";
 import { fileURLToPath } from "url";
 import { WebSocketServer } from "ws";
-import { loadEnvSettings } from "./settings.mjs";
 import { sortObjectByPropertyNames } from "./utils.mjs";
+import { getSettings } from "./settings.mjs";
+import http from "http";
+import https from "https";
+import fs from "fs";
 
 const app = express();
-const port = process.argv[2] || 8080;
-const wsPort = Number(port) + 1;
+const httpPort = process.argv[2] || 8080;
+const httpsPort = Number(httpPort) + 2;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -23,7 +26,8 @@ app.get("/scrape", (req, res) => {
 });
 
 app.get("/settings", (req, res) => {
-  const settings = sortObjectByPropertyNames(loadEnvSettings());
+  const settings = sortObjectByPropertyNames(getSettings());
+  settings.WSS_PRIVATE_KEY = "REDACTED";
   res.send(settings);
 });
 
@@ -37,8 +41,33 @@ app.use((req, res) => {
   res.status(404).send("The page you are looking for does not exist.");
 });
 
-// Create a WebSocket server
-const wss = new WebSocketServer({ port: wsPort });
+const sslKey = fs.readFileSync("certs/tris-self-signed-key.pem", "utf8");
+// Load SSL certificate and key
+if (!sslKey || !sslKey.startsWith("-----BEGIN PRIVATE KEY-----")) {
+  throw new Error("Invalid private key: " + WSS_PRIVATE_KEY);
+} else {
+  console.log("WSS SSL cert successfully read, applying it to web server configuration");
+}
+
+const sslCert = fs.readFileSync("certs/tris-self-signed-cert.pem", "utf8");
+
+// Create an HTTPS server with the SSL certificate and key
+const httpsServer = https.createServer(
+  {
+    key: sslKey,
+    cert: sslCert,
+  },
+  app
+);
+
+// Create an HTTP server
+const httpServer = http.createServer(app);
+
+// Create a WebSocket server attached to the HTTPS server
+const wss = new WebSocketServer({
+  server: httpsServer,
+  rejectUnauthorized: false,
+});
 
 // Handle WebSocket connections
 wss.on("connection", (ws) => {
@@ -83,6 +112,11 @@ wss.on("error", (error) => {
   console.log("WebSocket Server Error:", error);
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+// Start the servers
+httpsServer.listen(httpsPort, () => {
+  console.log(`HTTPS/WSS server is running on port ${httpsPort}`);
+});
+
+httpServer.listen(httpPort, () => {
+  console.log(`HTTP server is running on port ${httpPort}`);
 });

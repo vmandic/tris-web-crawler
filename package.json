@@ -2,14 +2,19 @@
   "name": "tris-simple-spider-scraper",
   "version": "1.0.0",
   "author": "mandic.vedran@gmail.com",
-  "description": "Simple NodeJS web scraper to extract links from a target domain - Tris (SSS).",
+  "description": "Simple NodeJS web scraper to extract links from a target domain - Tris.",
   "main": "index.js",
   "scripts": {
     "start": "node --experimental-modules index.js",
     "serve": "node --experimental-modules ./src/http_server.mjs",
     "serve:w": "nodemon --experimental-modules ./src/http_server.mjs",
     "docker:build": "docker build -t vmandic/tris:latest -f ./docker/Dockerfile .",
-    "docker:run": "docker run --rm -p 8080:8080 --name tris vmandic/tris"
+    "docker:build:amd": "docker build --platform linux/amd64 -t vmandic/tris:latest -f ./docker/Dockerfile .",
+    "docker:push": "docker push vmandic/tris:latest",
+    "docker:run": "docker run --rm --env-file .env -p 8080:8080 -p 8082:8082 --name tris vmandic/tris",
+    "docker:stop": "docker stop tris",
+    "docker:update:amd": "yarn docker:build:amd && yarn docker:push",
+    "fly": "yarn docker:build:amd && yarn docker:push && fly deploy"
   },
   "type": "module",
   "keywords": [],
