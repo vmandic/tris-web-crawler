@@ -1,12 +1,20 @@
-# Tris - Simple Spider Scraper 🕸🕷
+# Tris - A Simple Web Scraper 🕸🕷
 
 ![Docker build](https://github.com/vmandic/tris-simple-spider-scraper/actions/workflows/docker-image.yml/badge.svg)
 
 Docker 🐋 images: https://hub.docker.com/repository/docker/vmandic/tris
 
-Simple Spider Scraper or _Tris_ is a Node.js tool which is in its core a web scraper that allows you to recursively crawl a target domain and its HTML files for anchor elements and visit them each only once and deliver the list of visited links with a the associated HTTP status code. It provides various customization options to tailor the scraping process according to your needs.
+## Try it out online
 
-Whether you're a developer, SEO professional, or data enthusiast, Tris provides a simple yet powerful tool to gather valuable insights from websites.
+**Feel free to scrape first 20 links as much as you like: [https://tris.fly.dev](https://tris.fly.dev)**
+
+The online tool is rate limited to three parallel scraper processes and will live stream back the results to the results page. To modify the target URL just make sure you change it in the address bar query string.
+
+## About Tris web scraper
+
+_Tris_ is a Node.js tool which is in its core a very simple web scraper that allows you to recursively crawl a target domain and its HTML files for anchor elements and visit each of them only once and deliver the list of visited links with a the associated HTTP status response code. Tris provides various customization options to tailor the scraping process according to your needs.
+
+Whether you're a developer, SEO professional, or data enthusiast, Tris provides a simple yet powerful solution to gather valuable insights from websites.
 
 <img src="./assets/tris-screenshot.jpg" alt="Tris web browser screenshot of results page" />
 
@@ -14,11 +22,11 @@ Whether you're a developer, SEO professional, or data enthusiast, Tris provides 
 
 ### Developers
 
-Tris is ideal for developers who need a quick and reliable way to extract links from a website, whether for indexing purposes, link analysis, or content mapping.
+Tris is ideal for developers who need a quick and reliable way to extract links from a website, whether for indexing purposes, link analysis, or content mapping. Tris will help you find "dead" links ie. the non-HTTP 200 pages.
 
 ### SEO Professionals
 
-SEO professionals can leverage Tris to gather valuable data about a website's structure, internal linking, and potential SEO opportunities.
+SEO professionals can leverage Tris to gather valuable data about a website's structure, internal linking, and potential SEO opportunities. Ideal if a domain lacks a sitemap file because that is what Tris will create for you. Tris can be your sitemap generator.
 
 ### Data Enthusiasts
 
@@ -39,6 +47,12 @@ Data enthusiasts seeking to explore and analyze the structure of websites can us
 - **Exclude Query String and Fragment**: Optionally exclude query strings and fragments from URLs.
 - **Limit amount of requests**: Optionally limit the total amount of web requests to be sent.
 
+## Limitations
+
+Well, forget about pre-rendering SPA JavaScript based sites and forget about custom elements facilitating navigation functionality. Forget about passing advanced spam protection services like Cloudflare and similar. Those are some of the basic and usual constraints that Tris web scraper will currently not be able to surpass.
+
+Tris web scraper expects that it wont get blocked as bot and that the URL it requests will serve an HTML page (with HTTP response status code 200) with `<a href="URL here"></a>` elements that can be picked up and visited.
+
 ## Setup
 
 Prerequisite is NodeJS >= v14.17 (check out related [package.json](./package.json)).
@@ -55,19 +69,24 @@ git clone https://github.com/vmandic/tris-simple-spider-scraper.git
 yarn install
 ```
 
-## Run
+## How to use
 
-Before running you can set up you .env file first by looking at the [.env.example](./.env.example) file to set up the scraper configuration options.
+Tris is intended (so far) to be used on your own local computer so you can configure it at your will. To run it please go through the prior setup and the guides below to run locally.
 
-### From CLI
+You can try the online version also,
+**feel free to scrape first 20 links as much as you like: [https://tris.fly.dev](https://tris.fly.dev)**
 
-The results are printed back directly to the terminal standard output.
+Before running locally you can set up the .env file first by looking at the [.env.example](./.env.example) file to set up the scraper configuration options.
+
+### From the terminal with the CLI
+
+The results will be printed back directly to the terminal standard output.
 
 ```bash
-yarn start https:///www.github.com
+yarn start https://www.index.hr
 ```
 
-### As HTTP server
+### As a local HTTP server
 
 By default the web app will be served on :8080, you can specify your own port as first parameter.
 The following example will serve on the default 8080 port:
@@ -89,6 +108,12 @@ After starting the web server navigate to:<br>`/scrape?url={specify valid URL to
 ## Debugging
 
 You can debug the app in either CLI or web server run mode using the configuration in [`./vscode/launch.json`](./.vscode/launch.json). and vscode as your IDE and debugging tool.
+
+For continuos development and web server restart you can use the following nodemon watch command that will restart the app on any code change:
+
+```bash
+yarn serve:w
+```
 
 ## Configuration (Environment Variables)
 
@@ -115,13 +140,13 @@ cp .env.example .env
 
 Vedran Mandić
 
-Feel free to modify or extend it further based on your preferences!
-
 ## Why Tris?
 
 Tris stands out as a simple yet effective solution for web scraping, providing a balance between customization and ease of use. As said in the begging of this document, whether you're a developer, SEO professional, or data enthusiast, Tris empowers you to gather valuable insights from websites with minimal setup and maximum flexibility.
 
 Start exploring the web with Tris today!
+
+Feel free to modify or extend it further based on your preferences!
 
 ## License
 
