@@ -4,7 +4,7 @@
 
 Docker 🐋 images: https://hub.docker.com/repository/docker/vmandic/tris
 
-Simple Spider Scraper or _Tris_ is a Node.js web app or CLI tool which is in its core a web scraper that allows you to recursively crawl a website's HTML for anchor elements and visit them each only once. It provides various customization options to tailor the scraping process according to your needs.
+Simple Spider Scraper or _Tris_ is a Node.js tool which is in its core a web scraper that allows you to recursively crawl a target domain and its HTML files for anchor elements and visit them each only once and deliver the list of visited links with a the associated HTTP status code. It provides various customization options to tailor the scraping process according to your needs.
 
 Whether you're a developer, SEO professional, or data enthusiast, Tris provides a simple yet powerful tool to gather valuable insights from websites.
 
