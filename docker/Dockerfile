@@ -20,7 +20,6 @@ WORKDIR /usr/src/app
 # Copy only the necessary files from the build stage
 COPY --from=build /usr/src/app/node_modules ./node_modules
 COPY --from=build /usr/src/app/src ./src
-COPY --from=build /usr/src/app/certs ./certs
 COPY --from=build /usr/src/app/.env.example ./.env
 
 # Expose the HTTP server port

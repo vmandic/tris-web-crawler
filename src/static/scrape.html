@@ -38,14 +38,14 @@
           document.getElementById("scrapedUrl").textContent = scrapedUrl;
 
           // Extract port from the current window location
-          let port = Number(window.location.port);
+          const portNumber = Number(window.location.port);
+          const port = portNumber ? `:${portNumber}` : "";
 
           const isSsl = window.location.protocol === "https:";
-          port = isSsl ? port : port + 2; // WSS/SSL is +2
-          port = window.location.hostname != "localhost" ? 8082 : port;
+          const scheme = isSsl ? "wss" : "ws";
 
           // Establish WebSocket connection
-          const socket = new WebSocket(`wss://${window.location.hostname}:${port}/`);
+          const socket = new WebSocket(`${scheme}://${window.location.hostname}${port}`);
 
           socket.onopen = function (event) {
             // The connection is open, send the scraped URL and kick off the scraper
