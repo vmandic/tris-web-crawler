@@ -25,10 +25,5 @@ COPY --from=build /usr/src/app/.env.example ./.env
 # Expose the HTTP server port
 EXPOSE 8080
 
-# Expose the WebSocket port
-EXPOSE 8082
-
-ENV NODE_TLS_REJECT_UNAUTHORIZED=0
-
 # Run app
 ENTRYPOINT ["node", "--experimental-modules", "./src/http_server.mjs", "8080"]
