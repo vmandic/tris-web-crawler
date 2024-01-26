@@ -6,13 +6,9 @@ import { fileURLToPath } from "url";
 import { WebSocketServer } from "ws";
 import { sortObjectByPropertyNames } from "./utils.mjs";
 import { getSettings } from "./settings.mjs";
-import http from "http";
-import https from "https";
-import fs from "fs";
 
 const app = express();
 const httpPort = process.argv[2] || 8080;
-const httpsPort = Number(httpPort) + 2;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
