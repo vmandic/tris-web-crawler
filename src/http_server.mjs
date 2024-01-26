@@ -100,6 +100,10 @@ wss.on("connection", (ws) => {
 
         // Signal the end of scraping
         ws.close();
+
+        if (scrapingConcurrentCount > 0) {
+          scrapingConcurrentCount--;
+        }
       } catch (error) {
         ws.send(`Error: ${error.message}`);
       }
