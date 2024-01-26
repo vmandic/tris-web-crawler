@@ -88,6 +88,7 @@ wss.on("connection", (ws) => {
         scrapingConcurrentCount++;
         // TODO: implement a failsafe to unhook on client disconnect
         ws.send(`Starting scraper for URL: ${url}`);
+        console.log(`Starting scraper for URL: ${url}`);
         await startScraping({
           initialUrl: url,
           saveScrapeFile: false,
