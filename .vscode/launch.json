@@ -10,7 +10,7 @@
       "runtimeExecutable": "yarn",
       "runtimeArgs": ["start"],
       "args": [
-        "https://www.google.hr" // Add your website to scrape and debug
+        "https://www.google.hr" // Add your website to crawl and debug
       ],
       "skipFiles": ["<node_internals>/**"],
       "outFiles": ["${workspaceFolder}/**/*.js"],

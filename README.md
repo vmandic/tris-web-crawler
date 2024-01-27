@@ -1,4 +1,4 @@
-# Tris - A Simple Web Scraper 🕸🕷
+# Tris - A Simple Web Crawler 🕸🕷
 
 ![Docker build](https://github.com/vmandic/tris-simple-spider-scraper/actions/workflows/docker-image.yml/badge.svg)
 
@@ -6,13 +6,13 @@ Docker 🐋 images: https://hub.docker.com/repository/docker/vmandic/tris
 
 ## Try it out online
 
-**Feel free to scrape first 20 links as much as you like: [https://tris.fly.dev](https://tris.fly.dev)**
+**Feel free to crawl first 20 links as much as you like: [https://tris.fly.dev](https://tris.fly.dev)**
 
-The online tool is rate limited to three parallel scraper processes and will live stream back the results to the results page. To modify the target URL just make sure you change it in the address bar query string.
+The online tool is rate limited to three parallel crawler processes and will live stream back the results to the results page. To modify the target URL just make sure you change it in the address bar query string.
 
-## About Tris web scraper
+## About Tris web crawler
 
-_Tris_ is a Node.js tool which is in its core a very simple web scraper that allows you to recursively crawl a target domain and its HTML files for anchor elements and visit each of them only once and deliver the list of visited links with a the associated HTTP status response code. Tris provides various customization options to tailor the scraping process according to your needs.
+_Tris_ is a Node.js tool which is in its core a very simple web crawler that allows you to recursively crawl a target domain and its HTML files for anchor elements and visit each of them only once and deliver the list of visited links with a the associated HTTP status response code. Tris provides various customization options to tailor the scraping process according to your needs.
 
 Whether you're a developer, SEO professional, or data enthusiast, Tris provides a simple yet powerful solution to gather valuable insights from websites.
 
@@ -34,9 +34,9 @@ Data enthusiasts seeking to explore and analyze the structure of websites can us
 
 ## Features
 
-- **Customizable Settings**: Configure the scraper with various settings using environment variables.
+- **Customizable Settings**: Configure the crawler with various settings using environment variables.
 - **Timeout Handling**: Specify the timeout in milliseconds for each request.
-- **Path Depth Limitation**: Set the maximum depth of paths to be scraped.
+- **Path Depth Limitation**: Set the maximum depth of paths to be crawled.
 - **Randomized User Agents**: Provide a list of custom user-agent headers that are randomized between requests.
 - **Skip Words**: Skip links that contain specified skip words.
 - **Sorting Output**: Optionally sort the output file lines in ascending order.
@@ -49,9 +49,9 @@ Data enthusiasts seeking to explore and analyze the structure of websites can us
 
 ## Limitations
 
-Well, forget about pre-rendering SPA JavaScript based sites and forget about custom elements facilitating navigation functionality. Forget about passing advanced spam protection services like Cloudflare and similar. Those are some of the basic and usual constraints that Tris web scraper will currently not be able to surpass.
+Well, forget about pre-rendering SPA JavaScript based sites and forget about custom elements facilitating navigation functionality. Forget about passing advanced spam protection services like Cloudflare and similar. Those are some of the basic and usual constraints that Tris web crawler will currently not be able to surpass.
 
-Tris web scraper expects that it wont get blocked as bot and that the URL it requests will serve an HTML page (with HTTP response status code 200) with `<a href="URL here"></a>` elements that can be picked up and visited.
+Tris web crawler expects that it wont get blocked as bot and that the URL it requests will serve an HTML page (with HTTP response status code 200) with `<a href="URL here"></a>` elements that can be picked up and visited.
 
 ## Setup
 
@@ -74,9 +74,9 @@ yarn install
 Tris is intended (so far) to be used on your own local computer so you can configure it at your will. To run it please go through the prior setup and the guides below to run locally.
 
 You can try the online version also,
-**feel free to scrape first 20 links as much as you like: [https://tris.fly.dev](https://tris.fly.dev)**
+**feel free to crawl first 20 links as much as you like: [https://tris.fly.dev](https://tris.fly.dev)**
 
-Before running locally you can set up the .env file first by looking at the [.env.example](./.env.example) file to set up the scraper configuration options.
+Before running locally you can set up the .env file first by looking at the [.env.example](./.env.example) file to set up the crawler configuration options.
 
 ### From the terminal with the CLI
 
@@ -103,7 +103,7 @@ Start on port 7777 by explicitly specifying it:
 yarn serve 7777
 ```
 
-After starting the web server navigate to:<br>`/scrape?url={specify valid URL to start scraping from here}`
+After starting the web server navigate to:<br>`/crawl?url={specify valid URL to start scraping from here}`
 
 ## Debugging
 

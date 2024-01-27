@@ -1,8 +1,8 @@
 {
-  "name": "tris-simple-spider-scraper",
+  "name": "tris-web-crawler",
   "version": "1.0.0",
   "author": "mandic.vedran@gmail.com",
-  "description": "Simple NodeJS web scraper to extract links from a target domain - Tris.",
+  "description": "A simple NodeJS web crawler to extract links from a target domain - Tris.",
   "main": "index.js",
   "scripts": {
     "start": "node --experimental-modules index.js",
