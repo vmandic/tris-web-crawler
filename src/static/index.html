@@ -2,61 +2,54 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <meta name="author" content="Vedran Mandić" />
     <meta
       name="description"
-      content="Tris - Simple Spider Scraper. A Node.js web scraper to recursively crawl a website and collect links within a specified depth, built by Vedran Mandić."
+      content="Tris - A simple and free web crawler. Tris recursively crawls a website's domain HTML pages and collect its links, built by Vedran Mandić."
     />
     <!-- Open Graph meta tags for social media sharing -->
-    <meta property="og:title" content="Tris - Simple Spider Scraper" />
+    <meta property="og:title" content="Tris - A simple and free web crawler" />
     <meta
       property="og:description"
-      content="A Node.js web scraper to recursively crawl a website and collect links within a specified depth."
+      content="Tris - A simple and free web crawler. Tris recursively crawls a website's domain HTML pages and collect its links, built by Vedran Mandić."
     />
     <meta property="og:type" content="website" />
     <!-- Twitter Card meta tags for Twitter sharing -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Tris - Simple Spider Scraper" />
+    <meta name="twitter:title" content="Tris - A simple and free web crawler" />
     <meta
       name="twitter:description"
-      content="A Node.js web scraper to recursively crawl a website and collect links within a specified depth."
+      content="Tris - A simple and free web crawler. Tris recursively crawls a website's domain HTML pages and collect its links, built by Vedran Mandić."
     />
-    <!-- Include Tailwind CSS from CDN -->
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
-    <style>
-      a {
-        color: rgb(112, 71, 200);
-      }
-
-      a:hover {
-        color: rgb(64, 40, 117);
-      }
-    </style>
-    <title>Tris - Simple Spider Scraper</title>
+    <link href="/static/css/styles.css" rel="stylesheet" />
+    <title>Tris: Web crawler</title>
   </head>
-  <body>
-    <div class="container mx-auto my-8">
-      <h1 class="text-3xl font-bold mb-4">Tris - Simple Spider Scraper</h1>
+  <body class="overflow-x-hidden">
+    <div class="container mx-auto m-4 mb-4 px-2">
+      <h1 class="text-3xl font-bold mb-4">Tris - A simple and free web crawler</h1>
       <p class="text-lg mb-4">
-        A Node.js web scraper to recursively crawl a website and collect links
-        within a specified depth.
+        A simple, free, configurable and powerful web crawler that recursively visits a website's domain HTML pages from which it collects and visits its unique links.
       </p>
       <h3 class="text-lg mb-4 font-bold">How to use:</h3>
+      <p>Tris was designed to be used on your local computer so make sure you <a href="https://github.com/vmandic/tris-simple-spider-scraper">get the source code</a> and run in it on your own computer. If you wish to try it in a limited demo experience feel free to visit the following link below.
+      </p>
+      <br/>
       <p>
-        Navigate to the following link to start scraping from it by using the
+        Navigate to the following link (or modify the url query string parameter) to start crawling it by using the
         settings stated below:
-        <a id="scrape-link" href="">
-          <span id="domain"></span>/scrape?url=https://www.index.hr
+        <a id="crawl-link" href="/crawl?url=https://www.index.hr">
+          <span id="crawl-link-text"></span>
         </a>
         <br />
       </p>
       <br />
-      <h3 class="text-lg mb-4 font-bold">Current scraper settings:</h3>
-      <pre class="text-xs" id="settings"></pre>
+      <h3 class="text-lg mb-4 font-bold">Current crawler settings:</h3>
+      <pre class="text-xs" id="settings">Loading settings...</pre>
       <br />
       <h3 class="text-lg mb-4 font-bold">Source Code:</h3>
       <p class="text-lg mb-4">
@@ -68,28 +61,7 @@
         >
       </p>
       <h3>Built by: Vedran Mandić</h3>
-      <!-- Additional SEO content can be added here -->
     </div>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        document.querySelector("#domain").innerHTML = window.location.origin;
-        let aLink = document.querySelector("a#scrape-link");
-        let link = aLink.innerText;
-        aLink.setAttribute("href", link);
-
-        let xhr = new XMLHttpRequest();
-        xhr.open("GET", "/settings", true);
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState === 4 && xhr.status === 200) {
-            document.querySelector("#settings").innerText = JSON.stringify(
-              JSON.parse(xhr.responseText),
-              null,
-              2
-            );
-          }
-        };
-        xhr.send();
-      });
-    </script>
+    <script src="/static/js/index.js"></script>
   </body>
 </html>

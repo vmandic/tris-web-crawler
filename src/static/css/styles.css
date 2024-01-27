@@ -1,0 +1,59 @@
+:root {
+  font-size:  15px;
+}
+
+.container {
+  max-width: 100%;
+}
+
+a {
+  color: rgb(112, 71, 200);
+}
+
+a:hover {
+  color: rgb(64, 40, 117);
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: .5rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: .5rem 0;
+}
+
+pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+span.result {
+  display: inline-block;
+  margin: .5rem 0;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  :root {
+    font-size: 12px;
+  }
+}
+
+label input[type="checkbox"] {
+ display: inline-block;
+ position: relative;
+ top: 3px;
+}

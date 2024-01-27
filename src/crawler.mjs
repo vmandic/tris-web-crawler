@@ -70,7 +70,7 @@ function extractLinksFromAnchorElements($doc) {
   );
 }
 
-async function scrapeRecursive(opts) {
+async function crawlRecursive(opts) {
   let {
     baseUrl,
     relativeUrl,
@@ -143,7 +143,7 @@ async function scrapeRecursive(opts) {
     for (const link of pageLinks) {
       if (!attemptedLinks.has(link)) {
         const nextDepth = currentDepth + 1;
-        await scrapeRecursive({
+        await crawlRecursive({
           baseUrl: resolvedUrl,
           relativeUrl: link,
           currentDepth: nextDepth,
@@ -224,11 +224,11 @@ function transformLink(link) {
   return link;
 }
 
-export async function startScraping(opts) {
-  let { initialUrl, logCallbackFn, saveScrapeFile } = opts;
+export async function startCrawling(opts) {
+  let { initialUrl, logCallbackFn, saveCrawlFile } = opts;
   const startTimestamp = performance.now();
 
-  // Start the scraper with the initial URL, trim end '/' if specified
+  // Start the crawler with the initial URL, trim end '/' if specified
   if (initialUrl.endsWith("/")) {
     initialUrl = initialUrl.slice(0, -1);
   }
@@ -238,15 +238,15 @@ export async function startScraping(opts) {
   const counter = { totalRequests: 0, limited: false };
 
   const attemptedLinks =
-    (await scrapeRecursive({ baseUrl: initialUrl, logCallbackFn, counter })) ||
+    (await crawlRecursive({ baseUrl: initialUrl, logCallbackFn, counter })) ||
     [];
 
   if (attemptedLinks.length == 0) {
-    logCallbackFn("No links were scraped. Check your scraper settings.");
+    logCallbackFn("No links were crawled. Check your crawler settings.");
     return;
   }
 
-  if (saveScrapeFile) {
+  if (saveCrawlFile) {
     const formattedDate = new Date()
       .toISOString()
       .replace(/[-T:]/g, "")
@@ -254,19 +254,19 @@ export async function startScraping(opts) {
     const outputName = `s${formattedDate}-${encodeURIComponent(
       initialUrl
     )}.out`;
-    await writeScrapeFile(attemptedLinks, outputName);
+    await writeCrawlFile(attemptedLinks, outputName);
   }
 
   const endTimestamp = performance.now();
   const executionTimeMs = endTimestamp - startTimestamp;
   const executionTimeSec = (executionTimeMs / 1000).toFixed(2);
   logCallbackFn(
-    `Scraping completed. Scraper execution time ${executionTimeSec}s.`
+    `Crawling completed. Crawler execution time ${executionTimeSec}s.`
   );
 }
 
-async function writeScrapeFile(attemptedLinks, outputName) {
-  // After scraping is complete, convert the Set to an array
+async function writeCrawlFile(attemptedLinks, outputName) {
+  // After crawling is complete, convert the Set to an array
   let linksArray = Array.from(attemptedLinks);
 
   // Sort the array if SORT_OUTPUT is trues

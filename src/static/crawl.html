@@ -1,0 +1,56 @@
+<!-- static/crawl.html -->
+<!-- ChatGPT rel: https://chat.openai.com/c/8e121ed5-5999-4269-9e96-efb5520ccfa5 -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <meta name="author" content="Vedran Mandić" />
+    <meta
+      name="description"
+      content="Tris - A simple and free web crawler. Tris recursively crawls a website's domain HTML pages and collect its links, built by Vedran Mandić."
+    />
+    <!-- Open Graph meta tags for social media sharing -->
+    <meta property="og:title" content="Tris - A simple and free web crawler" />
+    <meta
+      property="og:description"
+      content="Tris - A simple and free web crawler. Tris recursively crawls a website's domain HTML pages and collect its links, built by Vedran Mandić."
+    />
+    <meta property="og:type" content="website" />
+    <!-- Twitter Card meta tags for Twitter sharing -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Tris - A simple and free web crawler" />
+    <meta
+      name="twitter:description"
+      content="Tris - A simple and free web crawler. Tris recursively crawls a website's domain HTML pages and collect its links, built by Vedran Mandić."
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link href="/static/css/styles.css" rel="stylesheet" />
+    <title>Tris: Results</title>
+  </head>
+  <body class="overflow-x-hidden">
+    <div class="container mx-auto m-4 mb-4 px-2">
+      <header class="p-2">
+        <h1>Crawling Results</h1>
+        <p><a id="nav-home" href="">Back to home page</a></p>
+        <h2>Results for URL: <span id="crawledUrl"></span></h2>
+        <div>
+          <label
+            >Follow results&nbsp;
+            <input id="cb-autoscroll" type="checkbox" checked="true"
+          /></label>
+        </div>
+      </header>
+      <main class="py-2">
+        <pre id="results"></pre>
+      </main>
+    </div>
+  </body>
+  <script src="/static/js/crawl.js"></script>
+</html>

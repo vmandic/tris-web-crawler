@@ -1,7 +1,7 @@
 // starting point for HTTP server run mode
 import express from "express";
 import path, { dirname } from "path";
-import { startScraping } from "./scraper.mjs";
+import { startCrawling } from "./crawler.mjs";
 import { fileURLToPath } from "url";
 import { WebSocketServer } from "ws";
 import { sortObjectByPropertyNames } from "./utils.mjs";
@@ -16,9 +16,9 @@ const __dirname = dirname(__filename);
 // Serve static files
 app.use("/static", express.static(path.join(__dirname, "static")));
 
-// Serve scrape.html for /scrape
-app.get("/scrape", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "scrape.html"));
+// Serve crawl.html for /crawl
+app.get("/crawl", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "crawl.html"));
 });
 
 app.get("/settings", (req, res) => {
@@ -46,12 +46,12 @@ const wss = new WebSocketServer({
 });
 
 // Poor man's single-replica anti-abuse :-)
-let scrapingConcurrentCount = 0;
+let crawlingConcurrentCount = 0;
 function resetScrapingConcurrentCount() {
-  if (scrapingConcurrentCount > 0) {
+  if (crawlingConcurrentCount > 0) {
     setTimeout(() => {
-      if (scrapingConcurrentCount > 0) {
-        scrapingConcurrentCount--;
+      if (crawlingConcurrentCount > 0) {
+        crawlingConcurrentCount--;
       }
     }, 10000);
   }
@@ -73,23 +73,23 @@ wss.on("connection", (ws) => {
     } else {
       try {
 
-        if (scrapingConcurrentCount > 3) {
+        if (crawlingConcurrentCount > 3) {
           console.log("Rate limited");
-          ws.send(`Scraper is limited to 3 scraping processes at a time, please try again in 10s`);
+          ws.send(`Crawler is limited to 3 scraping processes at a time, please try again in 10s`);
           resetScrapingConcurrentCount();
           ws.close();
           return;
         }
 
-        scrapingConcurrentCount++;
+        crawlingConcurrentCount++;
         // TODO: implement a failsafe to unhook on client disconnect
-        ws.send(`Starting scraper for URL: ${url}`);
-        console.log(`Starting scraper for URL: ${url}`);
-        await startScraping({
+        ws.send(`Starting Crawler for URL: ${url}`);
+        console.log(`Starting Crawler for URL: ${url}`);
+        await startCrawling({
           initialUrl: url,
-          saveScrapeFile: false,
+          saveCrawlFile: false,
           logCallbackFn: (result) => {
-            // Send scrape results to the connected client
+            // Send crawling results to the connected client
             ws.send(result);
           },
         });
@@ -97,8 +97,8 @@ wss.on("connection", (ws) => {
         // Signal the end of scraping
         ws.close();
 
-        if (scrapingConcurrentCount > 0) {
-          scrapingConcurrentCount--;
+        if (crawlingConcurrentCount > 0) {
+          crawlingConcurrentCount--;
         }
       } catch (error) {
         ws.send(`Error: ${error.message}`);

@@ -36,7 +36,7 @@ function getUserAgents() {
   if (randomAgentsCount && randomAgentsCount < 1) {
     return process.env.USER_AGENTS
       ? process.env.USER_AGENTS.split("\\")
-      : ["tris-simple-spider-scraper v1"];
+      : ["tris-web-crawler v1"]; // TODO: interpret active version
   }
 
   let agents = [];

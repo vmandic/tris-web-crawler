@@ -1,5 +1,5 @@
 // starting point for CLI run mode
-import { startScraping } from "./src/scraper.mjs";
+import { startCrawling } from "./src/crawler.mjs";
 
 let initialUrl = process.argv[2];
 
@@ -17,6 +17,6 @@ if (!initialUrl) {
 
 const log = (msg) => console.log(msg);
 
-startScraping({ initialUrl, logCallbackFn: log, saveScrapeFile: true }).catch(
+startCrawling({ initialUrl, logCallbackFn: log, saveCrawlFile: true }).catch(
   (error) => console.error(`Error: ${error.message}`)
 );
