@@ -12,7 +12,7 @@ The online tool is rate limited to three parallel crawler processes and will liv
 
 ## About Tris web crawler
 
-_Tris_ is a Node.js tool which is in its core a very simple web crawler that allows you to recursively crawl a target domain and its HTML files for anchor elements and visit each of them only once and deliver the list of visited links with a the associated HTTP status response code. Tris provides various customization options to tailor the scraping process according to your needs.
+_Tris_ is a Node.js tool which is in its core a very simple web crawler that allows you to recursively crawl a target domain and its HTML files for anchor elements and visit each of them only once and deliver the list of visited links with the associated HTTP status response code. Tris provides various customization options to tailor the crawling and scraping process according to your needs.
 
 Whether you're a developer, SEO professional, or data enthusiast, Tris provides a simple yet powerful solution to gather valuable insights from websites.
 
