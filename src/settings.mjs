@@ -14,7 +14,7 @@ export function getSettings() {
       SKIP_WORDS: process.env.SKIP_WORDS
         ? process.env.SKIP_WORDS.split(",")
         : [],
-      SORT_OUTPUT: process.env.SORT_OUTPUT === "true",
+      SORT_FILE_OUTPUT: process.env.SORT_FILE_OUTPUT === "true",
       DELAY_MS: parseInt(process.env.DELAY_MS) || 20,
       INCLUDE_PATH: process.env.INCLUDE_PATH || null,
       OUTPUT_HTTP_CODE: process.env.OUTPUT_HTTP_CODE === "true",

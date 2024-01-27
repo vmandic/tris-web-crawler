@@ -129,7 +129,7 @@ cp .env.example .env
 - `USER_AGENTS`: Provide a list of custom user-agent headers (comma-delimited).
 - `USE_RANDOM_AGENTS_COUNT`: Overrides USER_AGENTS if specified, generates N random UAs, default 0.
 - `SKIP_WORDS`: Specify skip words to skip links (comma-delimited).
-- `SORT_OUTPUT`: Set to "true" to sort output lines in ascending order.
+- `SORT_FILE_OUTPUT`: Set to "true" to sort output lines in ascending order.
 - `DELAY_MS`: Introduce a delay between requests (default: 0).
 - `INCLUDE_PATH`: Specify a path pattern to include only matching paths.
 - `OUTPUT_HTTP_CODE`: Set to "true" to include HTTP status codes in the output.

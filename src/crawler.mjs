@@ -14,7 +14,7 @@ const {
   SKIP_WORDS,
   OUTPUT_HTTP_CODE,
   DELAY_MS,
-  SORT_OUTPUT,
+  SORT_FILE_OUTPUT,
   TRIM_ENDING_SLASH,
   EXCLUDE_QUERY_STRING,
   EXCLUDE_FRAGMENT,
@@ -269,8 +269,8 @@ async function writeCrawlFile(attemptedLinks, outputName) {
   // After crawling is complete, convert the Set to an array
   let linksArray = Array.from(attemptedLinks);
 
-  // Sort the array if SORT_OUTPUT is trues
-  if (SORT_OUTPUT) {
+  // Sort the array if SORT_FILE_OUTPUT is trues
+  if (SORT_FILE_OUTPUT) {
     linksArray.sort();
   }
 
