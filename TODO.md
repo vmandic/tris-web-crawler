@@ -18,6 +18,7 @@ This document is just rough flow of ideas I will get to document in one place so
 - [ ] FEAT: remove cheerio to send the HTML page request, replace with fetch and add a retry to fetch with some logic to the retry attempts
 - [ ] FEAT/UX: add a proxy support to increase the changes of passing by protection, eg. smartproxy.com looks nice
 - [ ] CHORE/DEVUX: make the Github CI action have a manual step to make the fly.io deployment from main head ie. job in question
+- [ ] add support for finding links based on custom elements, eg. span.eu site uses Umbraco which does not have a single `<a></a>` in their HTML source, so doing this with an additional env config value could be very cool
 
 ## Product
 
