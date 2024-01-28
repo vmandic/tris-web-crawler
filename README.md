@@ -6,7 +6,7 @@ Docker 🐋 images: https://hub.docker.com/repository/docker/vmandic/tris
 
 ## Try it out online
 
-**Feel free to crawl first 20 links as much as you like: [https://tris.fly.dev](https://tris.fly.dev)**
+**Feel free to crawl first 100 links as much as you like: [https://tris.fly.dev](https://tris.fly.dev)**
 
 The online tool is rate limited to three parallel crawler processes and will live stream back the results to the results page. To modify the target URL just make sure you change it in the address bar query string.
 
@@ -74,7 +74,7 @@ yarn install
 Tris is intended (so far) to be used on your own local computer so you can configure it at your will. To run it please go through the prior setup and the guides below to run locally.
 
 You can try the online version also,
-**feel free to crawl first 20 links as much as you like: [https://tris.fly.dev](https://tris.fly.dev)**
+**feel free to crawl first 100 links as much as you like: [https://tris.fly.dev](https://tris.fly.dev)**
 
 Before running locally you can set up the .env file first by looking at the [.env.example](./.env.example) file to set up the crawler configuration options.
 
