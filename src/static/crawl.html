@@ -13,6 +13,8 @@
       name="description"
       content="Tris - A simple and free web crawler. Tris recursively crawls a website's domain HTML pages and collect its links, built by Vedran Mandić."
     />
+    <link rel="icon" type="image/x-icon" href="/static/icons/favicon.ico" />
+    <link rel="manifest" href="/static/manifest.json" />
     <!-- Open Graph meta tags for social media sharing -->
     <meta property="og:title" content="Tris - A simple and free web crawler" />
     <meta
@@ -32,6 +34,20 @@
       rel="stylesheet"
     />
     <link href="/static/css/styles.css" rel="stylesheet" />
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-21LCQ1TZR9"
+    ></script>
+    <script>
+      if (window.location.hostname != "localhost") {
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+        gtag("config", "G-21LCQ1TZR9");
+      }
+    </script>
     <title>Tris: Results</title>
   </head>
   <body class="overflow-x-hidden">

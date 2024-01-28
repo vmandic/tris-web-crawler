@@ -1,0 +1,31 @@
+{
+  "name": "Tris - Web crawler",
+  "short_name": "Tris",
+  "description": "A simple and free web crawler. Try for free on: https://tris.fly.dev",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#703DC8",
+  "icons": [
+    {
+      "src": "/static/icons/tris-web-crawler-favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/icons/tris-web-crawler-favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/icons/tris-web-crawler-android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/icons/tris-web-crawler-android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

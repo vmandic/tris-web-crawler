@@ -2,12 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
     <meta name="author" content="Vedran Mandić" />
     <meta
       name="description"
       content="Tris - A simple and free web crawler. Tris recursively crawls a website's domain HTML pages and collect its links, built by Vedran Mandić."
     />
+    <link rel="icon" type="image/x-icon" href="/static/icons/favicon.ico">
+    <link rel="manifest" href="/static/manifest.json">
     <!-- Open Graph meta tags for social media sharing -->
     <meta property="og:title" content="Tris - A simple and free web crawler" />
     <meta
@@ -27,21 +32,45 @@
       rel="stylesheet"
     />
     <link href="/static/css/styles.css" rel="stylesheet" />
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-21LCQ1TZR9"
+    ></script>
+    <script>
+      if (window.location.hostname != "localhost") {
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+        gtag("config", "G-21LCQ1TZR9");
+      }
+    </script>
     <title>Tris: Web crawler</title>
   </head>
   <body class="overflow-x-hidden">
     <div class="container mx-auto m-4 mb-4 px-2">
-      <h1 class="text-3xl font-bold mb-4">Tris - A simple and free web crawler</h1>
+      <h1 class="text-3xl font-bold mb-4">
+        Tris - A simple and free web crawler
+      </h1>
       <p class="text-lg mb-4">
-        A simple, free, configurable and powerful web crawler that recursively visits a website's domain HTML pages from which it collects and visits its unique links.
+        A simple, free, configurable and powerful web crawler that recursively
+        visits a website's domain HTML pages from which it collects and visits
+        its unique links.
       </p>
       <h3 class="text-lg mb-4 font-bold">How to use:</h3>
-      <p>Tris was designed to be used on your local computer so make sure you <a href="https://github.com/vmandic/tris-simple-spider-scraper">get the source code</a> and run in it on your own computer. If you wish to try it in a limited demo experience feel free to visit the following link below.
-      </p>
-      <br/>
       <p>
-        Navigate to the following link (or modify the url query string parameter) to start crawling it by using the
-        settings stated below:
+        Tris was designed to be used on your local computer so make sure you
+        <a href="https://github.com/vmandic/tris-simple-spider-scraper"
+          >get the source code</a
+        >
+        and run in it on your own computer. If you wish to try it in a limited
+        demo experience feel free to visit the following link below.
+      </p>
+      <br />
+      <p>
+        Navigate to the following link (or modify the url query string
+        parameter) to start crawling it by using the settings stated below:
         <a id="crawl-link" href="/crawl?url=https://www.index.hr">
           <span id="crawl-link-text"></span>
         </a>
