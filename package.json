@@ -14,7 +14,8 @@
     "docker:run": "docker run --rm --env-file .env -p 8080:8080 -p 8082:8082 --name tris vmandic/tris",
     "docker:stop": "docker stop tris",
     "docker:update:amd": "yarn docker:build:amd && yarn docker:push",
-    "fly": "yarn docker:build:amd && yarn docker:push && fly deploy"
+    "fly": "yarn docker:update:amd && fly deploy",
+    "flyctl": "yarn docker:update:amd && flyctl deploy"
   },
   "type": "module",
   "keywords": [],
