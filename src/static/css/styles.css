@@ -1,5 +1,39 @@
 :root {
-  font-size:  15px;
+  font-size: 15px;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Raleway", Verdana, sans-serif;
+}
+
+input[type="url"] {
+  border: 1px solid #999;
+  padding: .2rem .4rem;
+  width: 30vw;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="url"]:hover {
+  border: 1px solid #666;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.25);
+}
+
+input[type="submit"] {
+  padding: .3rem .6rem;
+  background-color: #eee;
+  transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: #aaa;
+  cursor: pointer;
 }
 
 .container {
@@ -7,23 +41,30 @@
 }
 
 a {
-  color: rgb(112, 71, 200);
+  color: #dc143c;
+  background-color: #eee;
+  position: relative;
+  display: inline-block;
+  transition: transform 0.3s ease;
+  padding: 0 .4rem;
 }
 
 a:hover {
-  color: rgb(64, 40, 117);
+  color: #6e091e;
+  transform: skew(0, 1deg);
 }
+
 
 h1 {
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 h2 {
   font-size: 1.2rem;
   font-weight: bold;
-  margin: .5rem 0;
+  margin: 0.5rem 0;
 }
 
 pre {
@@ -33,7 +74,7 @@ pre {
 
 span.result {
   display: inline-block;
-  margin: .5rem 0;
+  margin: 0.5rem 0;
 }
 
 header {
@@ -46,14 +87,33 @@ header {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+label input[type="checkbox"] {
+  display: inline-block;
+  position: relative;
+  top: 3px;
+}
+
+footer {
+  background: #eee;
+}
+
+footer a {
+  padding: 0;
+}
+
 @media (max-width: 768px) {
   :root {
     font-size: 12px;
   }
-}
 
-label input[type="checkbox"] {
- display: inline-block;
- position: relative;
- top: 3px;
+  input[type="url"] {
+    width: 100%;
+    margin: .4rem 0;
+    display: block;
+  }
+
+  input[type="submit"] {
+    width: 100%;
+    display: block;
+  }
 }

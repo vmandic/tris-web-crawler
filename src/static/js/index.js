@@ -15,12 +15,6 @@ const loadCrawlerSettings = () => {
   xhr.send();
 };
 
-const setCrawlLink = () => {
-  const absoluteLink = document.querySelector("#crawl-link").getAttribute("href");
-  document.querySelector("#crawl-link-text").innerHTML = window.location.origin + absoluteLink;
-};
-
 document.addEventListener("DOMContentLoaded", function () {
-  setCrawlLink();
   loadCrawlerSettings();
 });

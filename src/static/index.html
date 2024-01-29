@@ -11,6 +11,7 @@
       name="description"
       content="Tris - A simple and free web crawler. Tris recursively crawls a website's domain HTML pages and collect its links, built by Vedran Mandić."
     />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="icon" type="image/x-icon" href="/static/icons/favicon.ico" />
     <link rel="manifest" href="/static/manifest.json" />
     <!-- Open Graph meta tags for social media sharing -->
@@ -92,14 +93,17 @@
       </p>
       <br />
       <p>
-        Navigate to the following link (or modify the url query string
-        parameter) to start crawling it by using the settings stated below:
-        <a id="crawl-link" href="/crawl?url=https://www.index.hr">
-          <span id="crawl-link-text"></span>
-        </a>
-        <br />
+        Navigate or modify the target domain to start crawling it by using the settings stated below.
+        <div class="my-4">
+          <form method="GET" action="/crawl">
+            <label><strong>Start crawling target URL:</strong>
+              <input id="url" type="url" id="crawl-url" name="url" required minlength="4" value="https://www.index.hr"
+              autocomplete="off" />
+            </label>
+            <input id="crawl" type="submit" value="Crawl" />
+          </form>
+        </div>
       </p>
-      <br />
       <h3 class="text-lg mb-4 font-bold">Current crawler settings:</h3>
       <pre class="text-xs" id="settings">Loading settings...</pre>
       <br />
@@ -112,14 +116,17 @@
           >https://github.com/vmandic/tris-simple-spider-scraper</a
         >
       </p>
+    </div>
+    <footer class="p-2 py-4">
       <h3>
-        Built by: Vedran Mandić with ❤️️,
+        Built by Vedran Mandić (<a href="https://hachyderm.io/@vekzdran">@vekzdran@hachyderm.io</a>) with ❤️️
+        <br/>
         <a
-          href="https://github.com/vmandic/tris-simple-spider-scraper/releases/tag/v1.2.1"
-          >v1.2.1</a
+          href="https://github.com/vmandic/tris-simple-spider-scraper/releases/tag/v1.3.0"
+          >v1.3.0</a
         >
       </h3>
-    </div>
+    </footer>
     <script src="/static/js/index.js"></script>
   </body>
 </html>
