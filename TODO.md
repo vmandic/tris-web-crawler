@@ -23,7 +23,7 @@ This document is just rough flow of ideas I will get to document in one place so
 
 ## Product
 
-- [ ] UX: add an input on index.html to allow end user to specify a target URL
+- [x] UX: add an input on index.html to allow end user to specify a target URL
 - [ ] UX: infer HTTP or HTTPS, loosen the way the user specifies the domain eg. google.com or www.google.com or https://www.google.com, do some preflight checks to find the proper one before starting
 - [ ] SEO: count words of the actual HTML page and list them out as a valuable metric for the end user
 - [ ] UX: results breakdown: after finishing crawling print a an overview of the process like total successful links, dead links, HTTP code breakdown, avg/median etc
