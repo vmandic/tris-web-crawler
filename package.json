@@ -5,7 +5,8 @@
   "description": "A simple NodeJS web crawler to extract links from a target domain - Tris.",
   "main": "index.js",
   "scripts": {
-    "start": "node --experimental-modules index.js",
+    "start": "yarn serve",
+    "start:cli": "node --experimental-modules index.js",
     "serve": "node --experimental-modules ./src/http_server.mjs",
     "serve:w": "nodemon --experimental-modules ./src/http_server.mjs",
     "docker:build": "docker build -t vmandic/tris:latest -f ./docker/Dockerfile .",

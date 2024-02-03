@@ -12,7 +12,7 @@ The online tool is rate limited to three parallel crawler processes and will liv
 
 ## About Tris web crawler
 
-_Tris_ is a Node.js tool which is in its core a very simple web crawler that allows you to recursively crawl a target domain and its HTML files for anchor elements and visit each of them only once and deliver the list of visited links with the associated HTTP status response code. Tris provides various customization options to tailor the crawling and scraping process according to your needs.
+_Tris_ is a NodeJS tool which is in its core a very simple web crawler that allows you to recursively crawl a target domain and its HTML files for anchor elements and visit each of them only once and deliver the list of visited links with the associated HTTP status response code. Tris provides various customization options to tailor the crawling and scraping process according to your needs.
 
 Whether you're a developer, SEO professional, or data enthusiast, Tris provides a simple yet powerful solution to gather valuable insights from websites.
 
@@ -83,7 +83,7 @@ Before running locally you can set up the .env file first by looking at the [.en
 The results will be printed back directly to the terminal standard output.
 
 ```bash
-yarn start https://www.index.hr
+yarn start:cli https://www.index.hr
 ```
 
 ### As a local HTTP server
@@ -92,10 +92,10 @@ By default the web app will be served on :8080, you can specify your own port as
 The following example will serve on the default 8080 port:
 
 ```bash
-yarn serve
+yarn start
 ```
 
-The server works by opening a web socket connection on the given web server port +1 (ie. if you selected port 7777 then the socket will be on 7778). The web socket is used to transmit live scraping results back to the web page so you can see results as they come back.
+The server crawler link works by opening a web socket connection on the given web server port +1 (ie. if you selected port 7777 then the socket will be on 7778). The web socket is used to transmit live scraping results back to the web page so you can see results as they come back.
 
 Start on port 7777 by explicitly specifying it:
 
