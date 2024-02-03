@@ -1,6 +1,6 @@
 # Tris - A Simple Web Crawler 🕸🕷
 
-![Docker build](https://github.com/vmandic/tris-simple-spider-scraper/actions/workflows/docker-image.yml/badge.svg)
+![Docker build](https://github.com/vmandic/tris-web-crawler/actions/workflows/docker-image.yml/badge.svg)
 
 Docker 🐋 images: https://hub.docker.com/repository/docker/vmandic/tris
 
@@ -60,7 +60,7 @@ Prerequisite is NodeJS >= v14.17 (check out related [package.json](./package.jso
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/vmandic/tris-simple-spider-scraper.git
+git clone https://github.com/vmandic/tris-web-crawler.git
 ```
 
 2. Yarn install:
