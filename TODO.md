@@ -21,6 +21,8 @@ This document is just rough flow of ideas I will get to document in one place so
 - [ ] FEAT: add support for finding links based on custom elements, eg. span.eu site uses Umbraco which does not have a single `<a></a>` in their HTML source, so doing this with an additional env config value could be very cool
 - [ ] DEVUX/QA: add Dockerfile HEALTHCHECK for better fly.io integration
 - [ ] QA: add Sentry.io integration (works with fly.io nicely seems so, they have it in the UI somehow)
+- [ ] FEAT: read latest release version using github API or just by scraping the public link from Github's page
+- [ ] FEAT: read git commit hash during docker build in Github and set in image env and read the env in the index.html
 
 ## Product
 
