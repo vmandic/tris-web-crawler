@@ -14,7 +14,7 @@ h6 {
 
 input[type="url"] {
   border: 1px solid #999;
-  padding: .2rem .4rem;
+  padding: 0.2rem 0.4rem;
   width: 30vw;
   outline: none;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -25,15 +25,19 @@ input[type="url"]:hover {
   box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.25);
 }
 
-input[type="submit"] {
-  padding: .3rem .6rem;
+.button {
+  padding: 0.3rem 0.6rem;
   background-color: #eee;
   transition: background-color 0.3s ease;
 }
 
-input[type="submit"]:hover {
+.button:hover {
   background-color: #aaa;
   cursor: pointer;
+}
+
+.button:active {
+  background-color: #5a5a5a;
 }
 
 .container {
@@ -46,14 +50,13 @@ a {
   position: relative;
   display: inline-block;
   transition: transform 0.3s ease;
-  padding: 0 .4rem;
+  padding: 0 0.4rem;
 }
 
 a:hover {
   color: #6e091e;
   transform: skew(0, 1deg);
 }
-
 
 h1 {
   font-size: 2rem;
@@ -108,12 +111,69 @@ footer a {
 
   input[type="url"] {
     width: 100%;
-    margin: .4rem 0;
+    margin: 0.4rem 0;
     display: block;
   }
 
-  input[type="submit"] {
+  .button {
     width: 100%;
     display: block;
+    margin-bottom: 0.4rem;
+  }
+}
+
+/*index.html*/
+
+.web-spider-container {
+  top: .4em;
+  position: relative;
+}
+
+.web {
+  font-size: 2em;
+}
+
+.spider-container {
+  position: absolute;
+  left: 0;
+  animation: walk 2s infinite ease-in-out;
+}
+
+.left-right-container {
+  position: absolute;
+  animation: moveLeftRight 10s infinite linear;
+}
+
+.spider {
+  position: absolute;
+  font-size: .7em;
+  animation: rotate 8s infinite ease-in-out;
+  text-shadow: 1px 1px 0 #b91c1c;
+}
+
+@keyframes walk {
+  0%, 100% {
+    top: -80%;
+  }
+  50% {
+    top: 15%;
+  }
+}
+
+@keyframes moveLeftRight {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(1.5em);
+  }
+}
+
+@keyframes rotate {
+  0%, 50%, 100% {
+    transform: rotate(0deg);
+  }
+  25%, 75% {
+    transform: rotate(180deg);
   }
 }
