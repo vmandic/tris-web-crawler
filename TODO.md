@@ -9,6 +9,7 @@ This document is just rough flow of ideas I will get to document in one place so
 - [ ] CHORE/DEVUX/QA: add dockerfile lint with hadolint
 - [ ] CHORE/DEVUX/QA: add git commit hooks with husky to run linters
 - [ ] CHORE/DEVUX/QA: switch backend to TypeScript
+- [ ] FEAT: switch to Deno instead of Node!? (after switch to TypeScript)
 - [ ] CHORE/DEVUX/QA: switch frontend to TypeScript (and some build system like bun)
 - [ ] FEAT: change index and crawl HTML pages to be rendered from a template engine like handlebars/nunjucks etc, build a layout with header, body and footer
 - [ ] FEAT/BRANDING: add version info + git hash of a latest deployment and a link to latest release from Github to a page footer
@@ -24,6 +25,7 @@ This document is just rough flow of ideas I will get to document in one place so
 ## Product
 
 - [x] UX: add an input on index.html to allow end user to specify a target URL
+- [ ] UX: add a clear input button on index.html to clear the input easily (practical while on mobile UI)
 - [ ] UX: infer HTTP or HTTPS, loosen the way the user specifies the domain eg. google.com or www.google.com or https://www.google.com, do some preflight checks to find the proper one before starting
 - [ ] SEO: count words of the actual HTML page and list them out as a valuable metric for the end user
 - [ ] UX: results breakdown: after finishing crawling print a an overview of the process like total successful links, dead links, HTTP code breakdown, avg/median etc
