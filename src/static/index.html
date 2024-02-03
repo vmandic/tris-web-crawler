@@ -101,17 +101,28 @@
       </p>
       <br />
       <p>
-        Navigate or modify the target domain to start crawling it by using the settings stated below.
-        <div class="my-4">
-          <form method="GET" action="/crawl">
-            <label><strong>Start crawling target URL:</strong>
-              <input id="url" type="url" id="crawl-url" name="url" required minlength="4" value="https://www.index.hr"
-              autocomplete="off" />
-            </label>
-            <input id="crawl" type="submit" value="Crawl" />
-          </form>
-        </div>
+        Navigate or modify the target domain to start crawling it by using the
+        settings stated below.
       </p>
+      <div class="my-4">
+        <form method="GET" action="/crawl">
+          <label
+            ><strong>Start crawling target URL:</strong>
+            <input
+              id="url"
+              type="url"
+              id="crawl-url"
+              name="url"
+              required
+              minlength="4"
+              value="https://www.index.hr"
+              autocomplete="off"
+            />
+          </label>
+          <input id="crawl" class="button" type="submit" value="Crawl" />
+          <input id="clear" class="button" type="button" value="Clear" />
+        </form>
+      </div>
       <h3 class="text-lg mb-4 font-bold">Current crawler settings:</h3>
       <pre class="text-xs" id="settings">Loading settings...</pre>
       <br />

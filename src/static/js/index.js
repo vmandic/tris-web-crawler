@@ -15,6 +15,15 @@ const loadCrawlerSettings = () => {
   xhr.send();
 };
 
+const setClearHandler = () => {
+  document.getElementById("clear").addEventListener("click", (evt) => {
+    evt.preventDefault();
+    const urlTextBox = document.getElementById("url");
+    urlTextBox.value = "";
+  });
+};
+
 document.addEventListener("DOMContentLoaded", function () {
   loadCrawlerSettings();
+  setClearHandler();
 });
