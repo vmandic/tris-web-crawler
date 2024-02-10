@@ -1,49 +1,56 @@
 // starting point for HTTP server run mode
 import express from "express";
-import path, { dirname } from "path";
-import { startCrawling } from "./crawler.mjs";
-import { fileURLToPath } from "url";
+import path from "path";
+import { startCrawling } from "./crawler";
 import { WebSocketServer } from "ws";
-import { sortObjectByPropertyNames } from "./utils.mjs";
-import { getSettings } from "./settings.mjs";
+import { getRootDir, sortObjectByPropertyNames } from "./utils";
+import { getSettings } from "./settings";
 
 const app = express();
 const httpPort = process.argv[2] || 8080;
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const isProd = process.env['NODE_ENV'] == "production";
+
+if (!isProd) {
+  app.use("/src", express.static(path.join(getRootDir(__dirname), "src")));
+}
 
 // Serve static files
-app.use("/static", express.static(path.join(__dirname, "static")));
+app.use("/static", express.static(path.join(getRootDir(__dirname), "dist/static")));
 
 // Serve crawl.html for /crawl
-app.get("/crawl", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "crawl.html"));
+app.get("/crawl", (_req, res) => {
+  res.sendFile(path.join(getRootDir(__dirname), tryUseDistDirOrSrc(), "static/crawl.html"));
 });
 
-app.get("/settings", (req, res) => {
+app.get("/settings", (_req, res) => {
   const settings = sortObjectByPropertyNames(getSettings());
   res.send(settings);
 });
 
 // Serve index.html for / and /index.html
-app.get(["/", "/index.html"], (req, res) => {
-  res.sendFile(path.join(__dirname, "static/index.html"));
+app.get(["/", "/index.html"], (_req, res) => {
+  console.log("Root dir is:" +  getRootDir(__dirname));
+  res.sendFile(path.join(getRootDir(__dirname), tryUseDistDirOrSrc(), "static/index.html"));
 });
 
 // Fallback for all other routes
-app.use((req, res) => {
+app.use((_req, res) => {
   res.status(404).send("The page you are looking for does not exist.");
 });
 
  const httpServer = app.listen(httpPort, () => {
-  console.log(`HTTP server is running on port ${httpPort}`);
+  console.log(`HTTP server is running on http://localhost:${httpPort}`);
 });
 
 // Create a WebSocket server attached to the HTTPS server
 const wss = new WebSocketServer({
   server: httpServer
 });
+
+function tryUseDistDirOrSrc(): string {
+  return isProd ? "dist" : "src";
+}
 
 // Poor man's single-replica anti-abuse :-)
 let crawlingConcurrentCount = 0;
@@ -88,7 +95,7 @@ wss.on("connection", (ws) => {
         await startCrawling({
           initialUrl: url,
           saveCrawlFile: false,
-          logCallbackFn: (result) => {
+          logCallbackFn: (result: string) => {
             // Send crawling results to the connected client
             ws.send(result);
           },
@@ -100,7 +107,7 @@ wss.on("connection", (ws) => {
         if (crawlingConcurrentCount > 0) {
           crawlingConcurrentCount--;
         }
-      } catch (error) {
+      } catch (error: any) {
         ws.send(`Error: ${error.message}`);
       }
     }

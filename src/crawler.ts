@@ -1,9 +1,9 @@
 import axios from "axios";
-import cheerio from "cheerio";
+import cheerio, { CheerioAPI } from "cheerio";
 import url from "url";
 import fs from "fs/promises";
-import { getSettings } from "./settings.mjs";
-import { isSameDomain } from "./utils.mjs";
+import { getSettings } from "./settings";
+import { isSameDomain } from "./utils";
 
 const {
   WEB_REQUESTS_LIMIT,
@@ -21,15 +21,16 @@ const {
 } = getSettings();
 
 function filterLinksFromCurrentPage(
-  links,
-  resolvedUrl,
-  baseUrl,
-  attemptedLinks
+  links: any[],
+  resolvedUrl: any,
+  baseUrl: string,
+  attemptedLinks: any
 ) {
   const parsedBaseUrl = url.parse(baseUrl);
   const parsedDomain = `${parsedBaseUrl.protocol}//${parsedBaseUrl.hostname}`;
 
-  links = links.map((link) => {
+  links = links ??= [];
+  links = links.map((link: string) => {
     // Convert domain root relative link to absolute link
     if (link[0] === "/") {
       link = `${parsedDomain}${link}`;
@@ -44,7 +45,7 @@ function filterLinksFromCurrentPage(
     return link;
   });
 
-  links = links.filter((link) => {
+  links = links.filter((link: any) => {
     if (link == resolvedUrl) {
       return false;
     }
@@ -60,17 +61,24 @@ function filterLinksFromCurrentPage(
   return Array.from(new Set(links));
 }
 
-function extractLinksFromAnchorElements($doc) {
+function extractLinksFromAnchorElements($doc: CheerioAPI) {
   return Array.from(
     new Set(
       $doc("a[href]")
-        .map((_, element) => $doc(element).attr("href"))
+        .map((_: any, element: any) => $doc(element).attr("href"))
         .get()
     )
   );
 }
 
-async function crawlRecursive(opts) {
+async function crawlRecursive(opts: {
+  baseUrl: any;
+  relativeUrl?: any;
+  currentDepth?: any;
+  attemptedLinks?: Map<string, number>;
+  logCallbackFn: any;
+  counter: any;
+}) {
   let {
     baseUrl,
     relativeUrl,
@@ -81,7 +89,7 @@ async function crawlRecursive(opts) {
   } = opts;
 
   currentDepth = currentDepth || 0;
-  attemptedLinks = attemptedLinks || new Map();
+  attemptedLinks = attemptedLinks || new Map<string, number>();
 
   let resolvedUrl;
   let statusCode;
@@ -156,7 +164,7 @@ async function crawlRecursive(opts) {
 
     // Introduce a delay before making the next request
     await new Promise((resolve) => setTimeout(resolve, DELAY_MS));
-  } catch (error) {
+  } catch (error: any) {
     if (axios.isAxiosError(error)) {
       // Axios-specific error (network issue, timeout, etc.)
       console.warn(
@@ -164,7 +172,17 @@ async function crawlRecursive(opts) {
       );
     }
 
-    attemptedLinks.set(resolvedUrl, error.response?.status);
+    if (resolvedUrl) {
+      attemptedLinks.set(resolvedUrl, error.response?.status);
+    } else {
+      logCallbackFn(
+        "Request ${counter.totalRequests}, error: " +
+          `failed to resolve URL | ${
+            error.response?.status || "STATUS_UNKNOWN"
+          }`
+      );
+    }
+
     logCallbackFn(
       `Request ${counter.totalRequests}, error: ${
         resolvedUrl || relativeUrl
@@ -175,7 +193,11 @@ async function crawlRecursive(opts) {
   return attemptedLinks;
 }
 
-function isValidLink(link, baseUrl, attemptedLinks) {
+function isValidLink(
+  link: string,
+  baseUrl: string,
+  attemptedLinks: { has: (arg0: any) => any }
+) {
   if (attemptedLinks.has(link)) {
     return false;
   }
@@ -202,7 +224,7 @@ function isValidLink(link, baseUrl, attemptedLinks) {
   return areSameDomains;
 }
 
-function transformLink(link) {
+function transformLink(link: string | URL) {
   const urlObject = new URL(link);
 
   // Remove query string ie. ?
@@ -224,7 +246,11 @@ function transformLink(link) {
   return link;
 }
 
-export async function startCrawling(opts) {
+export async function startCrawling(opts: {
+  initialUrl: any;
+  logCallbackFn: any;
+  saveCrawlFile: any;
+}) {
   let { initialUrl, logCallbackFn, saveCrawlFile } = opts;
   const startTimestamp = performance.now();
 
@@ -239,9 +265,9 @@ export async function startCrawling(opts) {
 
   const attemptedLinks =
     (await crawlRecursive({ baseUrl: initialUrl, logCallbackFn, counter })) ||
-    [];
+    new Map<string, number>();
 
-  if (attemptedLinks.length == 0) {
+  if (attemptedLinks.size == 0) {
     logCallbackFn("No links were crawled. Check your crawler settings.");
     return;
   }
@@ -265,7 +291,10 @@ export async function startCrawling(opts) {
   );
 }
 
-async function writeCrawlFile(attemptedLinks, outputName) {
+async function writeCrawlFile(
+  attemptedLinks: Map<string, number>,
+  outputName: string
+) {
   // After crawling is complete, convert the Set to an array
   let linksArray = Array.from(attemptedLinks);
 
@@ -278,10 +307,11 @@ async function writeCrawlFile(attemptedLinks, outputName) {
   await fs.writeFile(
     outputName,
     linksArray
-      .map(
-        ([url, statusCode]) =>
-          `${url}${OUTPUT_HTTP_CODE ? `${"|" + statusCode || "|N/A"}` : ""}`
-      )
+      .map(([url, statusCode]) => {
+        return `${url}${
+          OUTPUT_HTTP_CODE ? `${"|" + statusCode || "|N/A"}` : ""
+        }`;
+      })
       .join("\n"),
     "utf-8"
   );

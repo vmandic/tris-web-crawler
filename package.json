@@ -1,25 +1,41 @@
 {
   "name": "tris-web-crawler",
-  "version": "1.0.0",
+  "version": "1.4.0",
   "author": "mandic.vedran@gmail.com",
   "description": "A simple NodeJS web crawler to extract links from a target domain - Tris.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "cp-dist": "mkdir -p dist/static && cp -r src/static dist/ && rm -rf dist/static/js/*.ts",
+    "rm-dist": "rm -rf dist",
+
+    "prebuild": "yarn rm-dist",
+    "build": "yarn tsc",
+    "postbuild": "yarn cp-dist",
+
+    "prebuild:production": "yarn rm-dist",
+    "build:production": "yarn tsc",
+    "postbuild:production": "yarn cp-dist",
+
     "start": "yarn serve",
-    "start:cli": "node --experimental-modules index.js",
-    "serve": "node --experimental-modules ./src/http_server.mjs",
-    "serve:w": "nodemon --experimental-modules ./src/http_server.mjs",
+    "start:cli": "node dist/index.js",
+    "serve": "cross-env NODE_ENV=production node ./dist/http_server.js",
+    "dev": "yarn build && cross-env NODE_ENV=development nodemon ./src/http_server.ts -e ts -w src",
     "docker:build": "docker build -t vmandic/tris:latest -f ./docker/Dockerfile .",
     "docker:build:amd": "docker build --platform linux/amd64 -t vmandic/tris:latest -f ./docker/Dockerfile .",
     "docker:push": "docker push vmandic/tris:latest",
-    "docker:run": "docker run --rm --env-file .env -p 8080:8080 -p 8082:8082 --name tris vmandic/tris",
+    "docker:run": "docker run --rm --env-file .env -p 8080:8080 --name tris vmandic/tris",
     "docker:stop": "docker stop tris",
     "docker:update:amd": "yarn docker:build:amd && yarn docker:push",
     "fly": "yarn docker:update:amd && fly deploy",
     "flyctl": "yarn docker:update:amd && flyctl deploy"
   },
-  "type": "module",
-  "keywords": [],
+  "keywords": [
+    "web-crawler",
+    "tris web crawler",
+    "seo tool",
+    "link crawling",
+    "seo spider"
+  ],
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.4",
@@ -36,8 +52,10 @@
     "@types/express": "^4.17.21",
     "@types/random-useragent": "^0.3.3",
     "@types/ws": "^8.5.10",
+    "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "nodemon": "^3.0.3",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },
   "engines": {
